@@ -1,0 +1,68 @@
+<html>
+<head>
+<title>
+Rainbow Matrix
+</title>
+</head>
+<body bgcolor="black">
+
+	<canvas id="canvas" width="600" height="600"></canvas>
+	<script type="text/javascript">
+
+		var canvas = document.getElementById("canvas");
+		var ctx = canvas.getContext("2d");
+
+		ctx.canvas.width = window.innerWidth - 20;
+		ctx.canvas.height = window.innerHeight - 20;
+
+		var textSize = 25;
+		var textNum = 50;
+		var colors = ["255,0,0","255,125,0","255,255,0","0,255,0","0,0,255","150,0,150"];
+		var characters = "1234567890qwertyuiopasdfghjklzxcvbnm,.<>/?;:[]{}\|=+-_!@#$%^&*()~`♠♣♦•◘○♀☼↕⌂↨§↑↓→←∟↔▼üΘ±╥╨ΦÜ─æ<Ñ╘";
+		characters = characters.split("");
+		var x = [];
+		var y = [];
+		var color = [];
+		for(i=0;i<textNum;i++){
+			x.push(Math.floor(Math.random()*(canvas.width/textSize))*textSize);
+			y.push(Math.floor(Math.random()*canvas.height)-canvas.height);
+			color.push(Math.floor(Math.random()*colors.length));
+		}
+
+		function drawScreen(){
+
+			for(i=0;i<x.length;i++){
+
+				ctx.beginPath();
+				ctx.fillStyle = "rgba(" + colors[color[i]] + ",1)";
+				ctx.font = textSize + "px arial";
+
+				ctx.fillText(characters[Math.floor(Math.random()*characters.length)],x[i],y[i]);
+				ctx.fill();
+
+				y[i] += textSize / 1.5;
+				if(y[i]>canvas.height){
+					y.splice(i,1);
+					x.splice(i,1);
+					color.splice(i,1);
+					x.push(Math.floor(Math.random()*(canvas.width/textSize))*textSize);
+					y.push(0);
+					color.push(Math.floor(Math.random()*colors.length));
+				}
+
+			}
+
+			ctx.beginPath();
+			ctx.fillStyle = "rgba(0,0,0,0.05)";
+
+			ctx.fillRect(0,0,canvas.width,canvas.height);
+			ctx.fill();
+
+		}
+
+		setInterval(drawScreen,50);
+
+	</script>
+
+</body>
+</html>
